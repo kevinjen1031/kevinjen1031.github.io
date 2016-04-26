@@ -5,16 +5,25 @@
   
   <title>Ubuntu 搭建tftp server | 宁静以致远</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1sudo apt-get install tftp-hpa">
+  <meta name="description" content="安装tftp和tftpd1sudo apt-get install tftp-hpa
+配置tftpd1sudo vim /etc/default/tftpd-hpa
+
+内容如下123456# /etc/default/tftpd-hpaTFTP_USERNAME=&quot;tftp&quot;TFTP_DIRECTORY=&quot;/tftpboot&quot;TFTP_ADDRESS=&quot;0.0.0.0:69&quot;TFTP_OPTION">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ubuntu 搭建tftp server">
 <meta property="og:url" content="http://yoursite.com/2016/04/26/Ubuntu-搭建tftp-server/index.html">
 <meta property="og:site_name" content="宁静以致远">
-<meta property="og:description" content="1sudo apt-get install tftp-hpa">
-<meta property="og:updated_time" content="2016-04-26T08:23:38.570Z">
+<meta property="og:description" content="安装tftp和tftpd1sudo apt-get install tftp-hpa
+配置tftpd1sudo vim /etc/default/tftpd-hpa
+
+内容如下123456# /etc/default/tftpd-hpaTFTP_USERNAME=&quot;tftp&quot;TFTP_DIRECTORY=&quot;/tftpboot&quot;TFTP_ADDRESS=&quot;0.0.0.0:69&quot;TFTP_OPTION">
+<meta property="og:updated_time" content="2016-04-26T09:49:16.024Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu 搭建tftp server">
-<meta name="twitter:description" content="1sudo apt-get install tftp-hpa">
+<meta name="twitter:description" content="安装tftp和tftpd1sudo apt-get install tftp-hpa
+配置tftpd1sudo vim /etc/default/tftpd-hpa
+
+内容如下123456# /etc/default/tftpd-hpaTFTP_USERNAME=&quot;tftp&quot;TFTP_DIRECTORY=&quot;/tftpboot&quot;TFTP_ADDRESS=&quot;0.0.0.0:69&quot;TFTP_OPTION">
   
     <link rel="alternate" href="/atom.xml" title="宁静以致远" type="application/atom+xml">
   
@@ -89,12 +98,21 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install tftp-hpa</span><br></pre></td></tr></table></figure>
+        <h2 id="安装tftp和tftpd"><a href="#安装tftp和tftpd" class="headerlink" title="安装tftp和tftpd"></a>安装tftp和tftpd</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install tftp-hpa</span><br></pre></td></tr></table></figure>
+<h2 id="配置tftpd"><a href="#配置tftpd" class="headerlink" title="配置tftpd"></a>配置tftpd</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/default/tftpd-hpa</span><br></pre></td></tr></table></figure>
+<ul>
+<li>内容如下<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /etc/default/tftpd-hpa</span></span><br><span class="line"></span><br><span class="line">TFTP_USERNAME=<span class="string">"tftp"</span></span><br><span class="line">TFTP_DIRECTORY=<span class="string">"/tftpboot"</span></span><br><span class="line">TFTP_ADDRESS=<span class="string">"0.0.0.0:69"</span></span><br><span class="line">TFTP_OPTIONS=<span class="string">"-l -c -s"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="创建tftp根目录"><a href="#创建tftp根目录" class="headerlink" title="创建tftp根目录"></a>创建tftp根目录</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /tftpboot</span><br><span class="line">sudo chmod -R 777 /tftpboot</span><br></pre></td></tr></table></figure>
+<h2 id="启动tftpd"><a href="#启动tftpd" class="headerlink" title="启动tftpd"></a>启动tftpd</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service tftpd-hpa restart</span><br></pre></td></tr></table></figure>
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"Hi, this is tftp test"</span> &gt; /tftpboot/tftp-test</span><br><span class="line">tftp 127.0.0.1 69 -c get tftp-test</span><br><span class="line">cat tftp-test</span><br></pre></td></tr></table></figure>
+<p>至此tftp server安装完成。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/04/26/Ubuntu-搭建tftp-server/" data-id="cinh642cq000089nddi6frpqd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/04/26/Ubuntu-搭建tftp-server/" data-id="cinh8z2o20000k1ndd5pxf7u9" class="article-share-link">Share</a>
       
       
     </footer>
